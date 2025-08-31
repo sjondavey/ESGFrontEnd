@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- ...existing code... -->
+</head>
+<body>
+    <div class="container">
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <h1>Upload Config File</h1>
+        <form id="configForm" method="post" enctype="multipart/form-data" action="/">
+            <input type="file" id="configFileInput" name="config_file" onchange="updateFileName('configFileInput', 'configFileLabel')">
+            <label id="configFileLabel" {% if config_file_name %}style="display:none;"{% endif %}>No file chosen</label>
+            <input type="submit" value="Upload">
+        </form>
+        {% if config_file_name %}
+            <p>{{ config_file_name }}</p>
+        {% endif %}
+
+        <h1>Upload Data Files</h1>
+        <form id="dataForm" method="post" enctype="multipart/form-data" action="/">
+            <input type="file" id="dataFilesInput" name="data_files" multiple onchange="updateFileCount('dataFilesInput', 'dataFilesLabel')">
+            <label id="dataFilesLabel">No file chosen</label>
+            <input type="submit" value="Upload">
+        </form>
+
+        <h1>Delete All Files</h1>
+        <form id="deleteFilesForm" method="post" action="/delete_files">
+            <input type="submit" value="Delete All Files">
+        </form>
+
+        <h1>Run ESG</h1>
+        <form id="runAppForm" method="post" action="/run_app">
+            <input type="submit" value="Run ESG">
+        </form>
+
+        <h1>View Output</h1>
+        <a href="/output">View ESG Output</a>
+
+        <h1>Download Outputs</h1>
+        <a href="/download_outputs">Download ESG Outputs</a>
+    </div>
+</body>
+</html>
