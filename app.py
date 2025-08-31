@@ -29,7 +29,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = DOWNLOAD_FOLDER
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def zip_files_in_download_folder(zip_filename):
     with zipfile.ZipFile(zip_filename, 'w') as zipf:
@@ -92,6 +92,7 @@ def index():
 
                 session['config_file_name'] = config_file.filename
                 flash('Config file uploaded and validated successfully', 'success')
+                app.logger.info('Config file uploaded: %s', config_file.filename)
 
         elif 'data_files' in request.files:
             data_files = request.files.getlist('data_files')
@@ -99,6 +100,7 @@ def index():
                 if data_file.filename != '':
                     data_file.save(os.path.join(app.config['UPLOAD_FOLDER'], data_file.filename))
             flash('Data files uploaded successfully', 'success')
+            app.logger.info('Data files uploaded: %s', [file.filename for file in data_files])
 
     config_file_name = session.get('config_file_name')
     return render_template('index.html', config_file_name=config_file_name)
@@ -111,6 +113,7 @@ def delete_files():
             os.remove(file_path)
     session.pop('config_file_name', None)
     flash('All files deleted successfully', 'success')
+    app.logger.warning('All files deleted from upload folder')
     return redirect(url_for('index'))
 
 @app.route('/run_app', methods=['POST'])
@@ -130,9 +133,11 @@ def run_app():
         output, error = process.communicate()
         if process.returncode == 0:
             flash('ESG application executed successfully', 'success')
+            app.logger.info('ESG application executed successfully')
             session['esg_output'] = output
         else:
             flash('ESG application execution failed', 'danger')
+            app.logger.error('ESG application execution failed: %s', error)
             session['esg_output'] = error
     else:
         flash('Config file is missing', 'danger')

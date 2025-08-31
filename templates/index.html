@@ -4,6 +4,10 @@
     <!-- ...existing code... -->
 </head>
 <body>
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/output">Output</a>
+    </div>
     <div class="container">
         <!-- Flash messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -18,7 +22,11 @@
 
         <h1>Upload Config File</h1>
         <form id="configForm" method="post" enctype="multipart/form-data" action="/">
-            <input type="file" id="configFileInput" name="config_file" onchange="updateFileName('configFileInput', 'configFileLabel')">
+            <div class="form-group">
+                <label for="configFileInput">Upload Config File</label>
+                <input type="file" id="configFileInput" name="config_file" onchange="updateFileName('configFileInput', 'configFileLabel')">
+                <small>Accepted format: .yaml</small>
+            </div>
             <label id="configFileLabel" {% if config_file_name %}style="display:none;"{% endif %}>No file chosen</label>
             <input type="submit" value="Upload">
         </form>
@@ -46,8 +54,13 @@
         <h1>View Output</h1>
         <a href="/output">View ESG Output</a>
 
-        <h1>Download Outputs</h1>
-        <a href="/download_outputs">Download ESG Outputs</a>
+        <h1>Download ESG Outputs</h1>
+        <form method="get" action="/download_outputs">
+            <input type="submit" value="Download ESG Outputs">
+        </form>
     </div>
+    <footer>
+        &copy; 2025 ESG Application. All rights reserved.
+    </footer>
 </body>
 </html>
