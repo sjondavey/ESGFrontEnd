@@ -124,7 +124,16 @@ def run_app():
         for filename in os.listdir(app.config['UPLOAD_FOLDER']):
             if filename.endswith('.csv'):
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                subprocess.run(['dos2unix', file_path])
+                try:
+                    # Read file in binary mode and convert line endings
+                    with open(file_path, 'rb') as file:
+                        content = file.read().replace(b'\r\n', b'\n')
+                    
+                    # Write converted content back to file
+                    with open(file_path, 'wb') as file:
+                        file.write(content)
+                except IOError as e:
+                    print(f"Error processing file {filename}: {e}")
 
         # Run the economic scenario generator app and capture output
         config_file_path = os.path.join(app.config['UPLOAD_FOLDER'], config_file_name)
