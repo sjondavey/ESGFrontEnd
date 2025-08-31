@@ -21,6 +21,8 @@ NOTE to azure folders. I am assuming the username in azure is `azureuser`.
 10. From your *local shell* copy the Flask code:
 `scp -r -i ~/.ssh/ESGVM_key.pem /home/steven/code/ESGFrontEnd/app.py azureuser@20.16.201.44:/home/azureuser/ESGFrontEnd/`
 `scp -r -i ~/.ssh/ESGVM_key.pem /home/steven/code/ESGFrontEnd/templates/* azureuser@20.16.201.44:/home/azureuser/ESGFrontEnd/templates/`
+ NOTE: ALSO Copy yhe Static folder
+
 11. We are going to run the Flask app in a gunicorn server:  
 `pip3 install gunicorn`  
 `gunicorn -w 4 -b 0.0.0.0:8000 app:app --timeout 120` (note the extended timeout which is required in case the output file is large)

@@ -1,12 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- ...existing code... -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESG Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    {% include 'header.html' %}
     <div class="navbar">
         <a href="/">Home</a>
-        <a href="/output">Output</a>
+        <a href="/output">ESG Logs</a>
     </div>
     <div class="container">
         <!-- Flash messages -->
@@ -20,47 +24,50 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Upload Config File</h1>
-        <form id="configForm" method="post" enctype="multipart/form-data" action="/">
-            <div class="form-group">
-                <label for="configFileInput">Upload Config File</label>
+        <div class="action-section">
+            <h2>Upload Files</h2>
+            <form id="configForm" method="post" enctype="multipart/form-data" action="/" style="margin-bottom: 20px;">
+                <label for="configFileInput">Choose Config File:</label>
                 <input type="file" id="configFileInput" name="config_file" onchange="updateFileName('configFileInput', 'configFileLabel')">
-                <small>Accepted format: .yaml</small>
-            </div>
-            <label id="configFileLabel" {% if config_file_name %}style="display:none;"{% endif %}>No file chosen</label>
-            <input type="submit" value="Upload">
-        </form>
-        {% if config_file_name %}
-            <p>{{ config_file_name }}</p>
-        {% endif %}
+                <label id="configFileLabel" {% if config_file_name %}style="display:none;"{% endif %}>No file chosen</label>
+                <input type="submit" value="Upload Config File">
+            </form>
 
-        <h1>Upload Data Files</h1>
-        <form id="dataForm" method="post" enctype="multipart/form-data" action="/">
-            <input type="file" id="dataFilesInput" name="data_files" multiple onchange="updateFileCount('dataFilesInput', 'dataFilesLabel')">
-            <label id="dataFilesLabel">No file chosen</label>
-            <input type="submit" value="Upload">
-        </form>
+            <form id="dataForm" method="post" enctype="multipart/form-data" action="/">
+                <label for="dataFilesInput">Choose Data Files:</label>
+                <input type="file" id="dataFilesInput" name="data_files" multiple onchange="updateFileCount('dataFilesInput', 'dataFilesLabel')">
+                <input type="submit" value="Upload Data Files">
+            </form>
+        </div>
 
-        <h1>Delete All Files</h1>
-        <form id="deleteFilesForm" method="post" action="/delete_files">
-            <input type="submit" value="Delete All Files">
-        </form>
+        <div class="action-section">
+            <h2>Delete All Files</h2>
+            <form id="deleteFilesForm" method="post" action="/delete_files">
+                <input type="submit" value="Delete All Files">
+            </form>
+        </div>
 
-        <h1>Run ESG</h1>
-        <form id="runAppForm" method="post" action="/run_app">
-            <input type="submit" value="Run ESG">
-        </form>
+        <div class="action-section">
+            <h2>Run ESG</h2>
+            <form id="runAppForm" method="post" action="/run_app">
+                <input type="submit" value="Run ESG">
+            </form>
+        </div>
 
-        <h1>View Output</h1>
-        <a href="/output">View ESG Output</a>
+        <div class="action-section">
+            <h2>View ESG Logs</h2>
+            <form method="get" action="/output">
+                <input type="submit" value="View ESG Logs">
+            </form>
+        </div>
 
-        <h1>Download ESG Outputs</h1>
-        <form method="get" action="/download_outputs">
-            <input type="submit" value="Download ESG Outputs">
-        </form>
+        <div class="action-section">
+            <h2>Download ESG Outputs</h2>
+            <form method="get" action="/download_outputs">
+                <input type="submit" value="Download ESG Outputs">
+            </form>
+        </div>
     </div>
-    <footer>
-        &copy; 2025 ESG Application. All rights reserved.
-    </footer>
+    {% include 'footer.html' %}
 </body>
 </html>

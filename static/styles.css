@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+.navbar {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    text-align: left;
+    margin-top: 20px;
+}
+.flash-messages .alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.action-section {
+    margin: 15px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.action-section h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
+.action-section form {
+    margin-bottom: 15px;
+}
+
+.action-section form:last-child {
+    margin-bottom: 0;
+}
+
+/* Remove the form-group class styling if it exists, as we're now using action-section */
+
+.header {
+    background-color: white;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;  /* reduced gap between text and icon */
+}
+
+.header img {
+    height: 60px;
+}
+
+.header h1 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5em;  /* slightly smaller font size */
+}
