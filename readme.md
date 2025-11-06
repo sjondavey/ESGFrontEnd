@@ -15,9 +15,8 @@ a. SSH to the Azure VM: `ssh -i ~/.ssh/ESGVM_key.pem azureuser@20.16.201.44`
 b. Create an environmental variable that `app.py` will use to check we are running in azure:   
 `echo 'export APP_ENV=production' >> ~/.bashrc`  
 `source ~/.bashrc`  
-c. Install the linux tool dos2unix: `sudo apt install dos2unix`    
-d. Install pip for Python 3: `sudo apt install -y python3-pip`  
-e. Install venv so you can create virtual environments: `sudo apt install -y python3-venv`  
+c. Install pip for Python 3: `sudo apt install -y python3-pip`  
+d. Install venv so you can create virtual environments: `sudo apt install -y python3-venv`  
 
 2. Clone the git repo and set it up
 ```  
@@ -30,6 +29,12 @@ source env/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+If you only want to update from the github repo:
+```
+git fetch origin
+git reset --hard origin/master
+```   
+
 
 3. We are going to run the Flask app in a gunicorn server:  
 ```
@@ -38,7 +43,7 @@ gunicorn -w 4 -b 0.0.0.0:8000 app:app --timeout 120
 ```  
 (note the extended timeout which is required in case the output file is large)
 
-4. In the Azure portal, make sure port 8000 is open: Go to the VM / Networking and Create port rule. Change the Desination port range to 8000, make it TCP and any source. Don't change any other default options
+4. In the Azure portal, make sure port 8000 is open: Go to the VM / Networking and Create inbound port rule. Change the Destination port range to 8000, make it TCP and any source. Don't change any other default options
 5. Now you should be able to navigate to http://20.16.201.44:8000/ (or your IP address at port 8000) and you should see the app running.
 
 
@@ -111,10 +116,17 @@ sudo systemctl restart nginx
 ```
 At this point, your Flask app should be reachable at http://esg.aleph-one.co
 
-4. Enable HTTPS (Let’s Encrypt)
+4. Enable HTTPS (Let's Encrypt)
 Install certbot:   
 `sudo apt install certbot python3-certbot-nginx -y`
 Run:  
 `sudo certbot --nginx -d esg.aleph-one.co`  
 Choose option 2 (redirect HTTP to HTTPS).  
 This will automatically edit your NGINX config to use SSL.
+
+If you close down the service, to restart it
+```
+sudo systemctl daemon-reexec
+sudo systemctl restart esg
+sudo journalctl -u esg -f
+```

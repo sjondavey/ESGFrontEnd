@@ -20,7 +20,7 @@ if env == "local":
     BACKEND_ROOT = '/home/steven/code/AutoESG/'
 else:
     FRONTEND_ROOT = '/home/azureuser/ESGFrontEnd/'
-    BACKEND_ROOT = '/home/azureuser/AutoESG/'
+    BACKEND_ROOT = '/home/azureuser/ESG/'
 
 UPLOAD_FOLDER = FRONTEND_ROOT + 'inputs/'
 DOWNLOAD_FOLDER = FRONTEND_ROOT + 'outputs/'
